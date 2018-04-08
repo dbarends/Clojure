@@ -153,3 +153,22 @@
              :series-label :Eiwit)
 
 (i/view (c/set-theme plot :light))
+
+
+;; dckFindEnergie ----------------------------------------------------------
+(def dckxml (xml/parse "/Users/dickbarends/Desktop/voedsel.xml"))
+(def dckzip (zip/xml-zip dckxml))
+
+(defn dckFindEnergie
+  [dckxml supplement]
+  (cond
+    (zip/end? dckxml) []
+    (= (:tag (zip/node dckxml)) supplement) (cons (read-string (first (:content (zip/node dckxml))))
+                                                  (dckFindEnergie (zip/next dckxml) supplement)) 
+    :else (dckFindEnergie (zip/next dckxml) supplement)))
+
+(def supplementen [:Energie :Vet :VerzadigdVet :Eiwit :Vezels :Zout :Alcohol :Water :Natrium :Calcium
+                   :Magnesium :IJzer :Selenium :Zink :VitamineA :VitamineD :VitamineE :VitamineB1
+                   :VitamineB2 :VitamineB6 :Foliumzuur :VitamineB12 :Nicotinezuur :VitamineC :Jodium])
+
+(map #(reduce + 0 %) (map #(dckFindEnergie dckzip %) supplementen))
