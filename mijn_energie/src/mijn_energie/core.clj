@@ -9,30 +9,6 @@
          'incanter.datasets)
 
 
-;;------------------------------------------------------------------------------
-;; De functie die de energie hoeveelheid, totaal, berekend voor een dag.
-;;
-;; Deze functie moet nog verder worden geoptimaliseerd. Zoals die nu is is
-;; hij compleet onleesbaar
-;;
-;;          input            ->          output
-;; output van parse commando -> waarde van energie element
-;;
-;;------------------------------------------------------------------------------
-(defn mijnEnergie
-  [x]
-  [(:Van (:attrs x)) 
-   (reduce + 0
-           (map read-string
-                (flatten
-                 (map :content
-                      (map (fn [x] (get x 0))
-                           (map :content
-                                (map (fn [x] (get x 2))
-                                     (map :content
-                                          (:content x)))))))))
-   ])
-
 
 ;; alternatief -----------------------------------------------------------------
 ;;
