@@ -8,13 +8,6 @@
          '[clj-time.core :refer [date-time]]
          'incanter.datasets)
 
-(defn -main
-  "I don't do a whole lot ... yet."
-  [& args]
-  (println "Hello, World!"))
-
-
-;(def data (xml/parse "/users/dickbarends/desktop/consumpties.xml"))
 
 ;;------------------------------------------------------------------------------
 ;; De functie die de energie hoeveelheid, totaal, berekend voor een dag.
@@ -27,18 +20,18 @@
 ;;
 ;;------------------------------------------------------------------------------
 (defn mijnEnergie
-   [x]
-   [(:Van (:attrs x)) 
-    (reduce + 0
-            (map read-string
-                 (flatten
-                  (map :content
-                       (map (fn [x] (get x 0))
-                            (map :content
-                                 (map (fn [x] (get x 2))
-                                      (map :content
-                                           (:content x)))))))))
-    ])
+  [x]
+  [(:Van (:attrs x)) 
+   (reduce + 0
+           (map read-string
+                (flatten
+                 (map :content
+                      (map (fn [x] (get x 0))
+                           (map :content
+                                (map (fn [x] (get x 2))
+                                     (map :content
+                                          (:content x)))))))))
+   ])
 
 
 ;; alternatief -----------------------------------------------------------------
@@ -88,14 +81,14 @@
        (map #(dckDagVoedStofHoev (zip/xml-zip (xml/parse bestand)) %)
             supplementen)))
 
-;(def bestanden (mapv str (filter #(.isFile %) (file-seq (clojure.java.io/file "/users/dickbarends/Desktop/MijnVoeding")))))
+                                        ;(def bestanden (mapv str (filter #(.isFile %) (file-seq (clojure.java.io/file "/users/dickbarends/Desktop/MijnVoeding")))))
 
 (def bestanden
   (filter #(clojure.string/ends-with? % "xml" )
-           (mapv str
-                 (filter #(.isFile %)
-                          (file-seq
-                               (clojure.java.io/file "/users/dickbarends/Desktop/MijnVoeding"))))))
+          (mapv str
+                (filter #(.isFile %)
+                        (file-seq
+                         (clojure.java.io/file "/users/dickbarends/Desktop/MijnVoeding"))))))
 
 (defn energieVector
   [bestanden]
@@ -110,8 +103,8 @@
    string -> int"
   [dck-datum]
   (.getMillis (date-time (Integer/parseInt (subs dck-datum 6 10))
-             (Integer/parseInt (subs dck-datum 3 5 ))
-             (Integer/parseInt (subs dck-datum 0 2 )))))
+                         (Integer/parseInt (subs dck-datum 3 5 ))
+                         (Integer/parseInt (subs dck-datum 0 2 )))))
 
 (defn energieVectorVoorPlot
   [bestanden]
