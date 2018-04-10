@@ -34,24 +34,6 @@
    ])
 
 
-;; alternatief -----------------------------------------------------------------
-;;
-;; TODO: return the sum for the whole day
-;;
-(defn mijnVoedingsstof
-  [x stof]
-  (->> x
-       zip/xml-zip
-       zip/down
-       zip/down
-       zip/rightmost
-       zip/children
-       (map (fn [x] [(:tag x) (:content x)]))
-       (into {})
-       stof
-       ))
-
-
 ;; Nog een alternatief -------------------------------------------------------
 
 ;; (def dckxml (xml/parse "/Users/dickbarends/Desktop/voedsel.xml"))
